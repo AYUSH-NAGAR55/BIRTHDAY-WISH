@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Birthday Wishes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Dancing+Script:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: #0a0a0a;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500, #ff3838, #ff6348, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .shape-1 { 
+            top: 10%; left: 10%; 
+            width: 100px; height: 100px;
+            background: linear-gradient(45deg, #ff6b9d, #c44569);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 { 
+            top: 20%; right: 15%; 
+            width: 80px; height: 80px;
+            background: linear-gradient(45deg, #f8b500, #ff3838);
+            transform: rotate(45deg);
+            animation-delay: 2s;
+        }
+
+        .shape-3 { 
+            bottom: 20%; left: 20%; 
+            width: 120px; height: 120px;
+            background: linear-gradient(45deg, #ff6348, #ff9ff3);
+            border-radius: 30%;
+            animation-delay: 4s;
+        }
+
+        .shape-4 { 
+            bottom: 30%; right: 10%; 
+            width: 90px; height: 90px;
+            background: linear-gradient(45deg, #c44569, #ff6b9d);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(90deg) scale(1.1); }
+            50% { transform: translateY(-60px) rotate(180deg) scale(0.9); }
+            75% { transform: translateY(-30px) rotate(270deg) scale(1.1); }
+        }
+
+        /* Sparkle Animation */
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Page Styles */
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8) rotateY(90deg);
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg);
+        }
+
+        .page.hidden {
+            display: none;
+        }
+
+        /* Page 1 - Welcome */
+        .welcome-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 4rem 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #ff6b9d, #f8b500, #fff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 4s ease infinite;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes textGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .welcome-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 1.5rem 2rem;
+            border: none;
+            border-radius: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            outline: none;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 1s ease 0.7s both;
+        }
+
+        .name-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .name-input:focus {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .magic-btn {
+            background: linear-gradient(45deg, #ff6b9d, #c44569, #f8b500);
+            background-size: 300% 300%;
+            color: white;
+            border: none;
+            padding: 1.5rem 3rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 1s ease 0.9s both, buttonGlow 2s ease-in-out infinite alternate;
+            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.4);
+        }
+
+        @keyframes buttonGlow {
+            from { box-shadow: 0 15px 35px rgba(255, 107, 157, 0.4); }
+            to { box-shadow: 0 20px 40px rgba(255, 107, 157, 0.6), 0 0 20px rgba(255, 107, 157, 0.3); }
+        }
+
+        .magic-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .magic-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            animation-play-state: paused;
+        }
+
+        .magic-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Page 2 - Birthday Message */
+        .birthday-container {
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .birthday-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #ff6b9d, #f8b500, #ff6348, #fff);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 3s ease infinite, bounce 2s ease-in-out infinite;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            border-radius: 25px;
+            padding: 4rem;
+            margin-bottom: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 40px 80px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+
+        .quote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-style: italic;
+            position: relative;
+            animation: typewriter 3s steps(60) 1s both;
+        }
+
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: #ff6b9d;
+            position: absolute;
+        }
+
+        .quote::before { top: -10px; left: -20px; }
+        .quote::after { bottom: -30px; right: -20px; }
+
+        .personal-message {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 2s both;
+        }
+
+        .name-highlight {
+            background: linear-gradient(45deg, #ff6b9d, #f8b500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            font-size: 1.1em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Page 3 - Final Wishes */
+        .final-container {
+            text-align: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .final-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #fff, #ff6b9d, #f8b500, #fff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 4s ease infinite;
+            margin-bottom: 3rem;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .wishes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .wish-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(30px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            animation: cardSlideIn 0.8s ease both;
+        }
+
+        .wish-card:nth-child(1) { animation-delay: 0.2s; }
+        .wish-card:nth-child(2) { animation-delay: 0.4s; }
+        .wish-card:nth-child(3) { animation-delay: 0.6s; }
+        .wish-card:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(50px) rotateX(30deg); }
+            to { opacity: 1; transform: translateY(0) rotateX(0deg); }
+        }
+
+        .wish-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s;
+        }
+
+        .wish-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .wish-card:hover::before {
+            left: 100%;
+        }
+
+        .wish-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: iconSpin 4s ease-in-out infinite;
+        }
+
+        @keyframes iconSpin {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(-5deg) scale(1.1); }
+        }
+
+        .wish-text {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .signature-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(40px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            animation: signatureGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes signatureGlow {
+            from { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); }
+            to { box-shadow: 0 30px 60px rgba(255, 107, 157, 0.2); }
+        }
+
+        .signature-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .welcome-title, .birthday-title, .final-title {
+                font-size: 2.5rem;
+            }
+            
+            .quote {
+                font-size: 1.3rem;
+            }
+            
+            .wishes-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .welcome-container, .message-card {
+                padding: 2.5rem 2rem;
+            }
+            
+            .navigation {
+                bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Floating Elements -->
+    <div class="floating-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- Sparkles -->
+    <div class="sparkles" id="sparkles"></div>
+
+    <!-- Page 1: Welcome -->
+    <div class="page active" id="page1">
+        <div class="welcome-container">
+            <h1 class="welcome-title">✨ Magical Birthday Wishes ✨</h1>
+            <p class="welcome-subtitle">
+                Create an enchanting personalized birthday experience filled with love, wonder, and beautiful memories
+            </p>
+            <input type="text" class="name-input" id="nameInput" placeholder="Enter your name" maxlength="25">
+            <button class="magic-btn" onclick="createMagic()">
+                🎭 Create Magic ✨
+            </button>
+        </div>
+    </div>
+
+    <!-- Page 2: Birthday Message -->
+    <div class="page hidden" id="page2">
+        <div class="birthday-container">
+            <h1 class="birthday-title">🎉 Happy Birthday! 🎂</h1>
+            <div class="message-card">
+                <div class="quote">
+                    The secret to staying young is to live honestly, eat slowly, and lie about your age.
+                </div>
+                <div class="personal-message">
+                    Dearest <span class="name-highlight" id="nameDisplay1">Beautiful Soul</span>,
+                    <br><br>
+                    Today we celebrate not just another year of your incredible journey, but the amazing person you've become. Your presence lights up every room, your laughter brings joy to countless hearts, and your spirit inspires everyone around you. May this new chapter be filled with extraordinary adventures, boundless happiness, and dreams that reach beyond the stars! 🌟✨
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Final Wishes -->
+    <div class="page hidden" id="page3">
+        <div class="final-container">
+            <h1 class="final-title">🌟 Magical Wishes for <span class="name-highlight" id="nameDisplay2">You</span> 🌟</h1>
+            
+            <div class="wishes-grid">
+                <div class="wish-card">
+                    <div class="wish-icon">🌈</div>
+                    <div class="wish-text">
+                        May your life be painted with the most magnificent colors of joy, love, and endless possibilities that stretch beyond the horizon.
+                    </div>
+                </div>
+                
+                <div class="wish-card">
+                    <div class="wish-icon">⭐</div>
+                    <div class="wish-text">
+                        May you shine brighter than the constellation of stars and achieve every dream that dances in your heart.
+                    </div>
+                </div>
+                
+                <div class="wish-card">
+                    <div class="wish-icon">🎈</div>
+                    <div class="wish-text">
+                        May your days overflow with contagious laughter, your heart with unconditional love, and your life with magical celebrations.
+                    </div>
+                </div>
+                
+                <div class="wish-card">
+                    <div class="wish-icon">🌸</div>
+                    <div class="wish-text">
+                        May you bloom like the most exquisite flower in an eternal spring, spreading beauty and wonder wherever you wander.
+                    </div>
+                </div>
+            </div>
+
+            <div class="signature-card">
+                <div class="signature-text">
+                    ✨ Crafted with infinite love and magic by Ayush Nagar ✨
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousPage()" disabled>← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextPage()">Next →</button>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let userName = '';
+
+        // Create magical sparkles
+        function createSparkles() {
+            const sparklesContainer = document.getElementById('sparkles');
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+        }
+
+        function createMagic() {
+            const nameInput = document.getElementById('nameInput');
+            userName = nameInput.value.trim();
+            
+            if (!userName) {
+                nameInput.style.borderColor = '#ff6b9d';
+                nameInput.style.boxShadow = '0 0 20px rgba(255, 107, 157, 0.5)';
+                nameInput.placeholder = '✨ Please enter a magical name first! ✨';
+                
+                setTimeout(() => {
+                    nameInput.style.borderColor = 'transparent';
+                    nameInput.style.boxShadow = 'none';
+                    nameInput.placeholder = 'Enter the special person\'s name';
+                }, 3000);
+                return;
+            }
+
+            // Add magical effect
+            nameInput.style.transform = 'scale(1.1)';
+            nameInput.style.boxShadow = '0 0 30px rgba(248, 181, 0, 0.8)';
+            
+            setTimeout(() => {
+                // Update name displays
+                document.getElementById('nameDisplay1').textContent = userName;
+                document.getElementById('nameDisplay2').textContent = userName;
+                
+                nextPage();
+            }, 800);
+        }
+
+        function showPage(pageNum) {
+            // Hide all pages with animation
+            for (let i = 1; i <= 3; i++) {
+                const page = document.getElementById(`page${i}`);
+                if (page.classList.contains('active')) {
+                    page.classList.remove('active');
+                    setTimeout(() => {
+                        page.classList.add('hidden');
+                    }, 600);
+                }
+            }
+
+            // Show target page with animation
+            setTimeout(() => {
+                const targetPage = document.getElementById(`page${pageNum}`);
+                targetPage.classList.remove('hidden');
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 100);
+            }, 600);
+
+            // Update navigation
+            document.getElementById('prevBtn').disabled = pageNum === 1;
+            document.getElementById('nextBtn').disabled = pageNum === 3;
+            
+            if (pageNum === 3) {
+                document.getElementById('nextBtn').textContent = '🎉 Celebrate! 🎉';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Next →';
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < 3) {
+                currentPage++;
+                showPage(currentPage);
+            } else {
+                // Celebration effect on final page
+                createCelebrationEffect();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        function createCelebrationEffect() {
+            // Create temporary celebration elements
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = ['#ff6b9d', '#f8b500', '#ff6348', '#c44569'][Math.floor(Math.random() * 4)];
+                confetti.style.zIndex = '1000';
+                confetti.style.animation = 'confettiFall 3s ease-out forwards';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // Add confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confettiFall {
+                to {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize effects
+        window.addEventListener('load', () => {
+            createSparkles();
+        });
+
+        // Enhanced keyboard support
+        document.getElementById('nameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                createMagic();
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && currentPage < 3) {
+                nextPage();
+            } else if (e.key === 'ArrowLeft' && currentPage > 1) {
+                previousPage();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9794f8a2452c465e',t:'MTc1Njg5OTYxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
